@@ -1,6 +1,6 @@
 ﻿namespace TVMazeIntegration.Models.Requests;
 
-internal record SearchByNameRequest {
+public record SearchByNameRequest {
 
     public string Query { get; init; }
 

@@ -4,7 +4,7 @@ using TVMazeIntegration.Models.Results;
 
 namespace TVMazeIntegration.Services;
 
-internal interface IShowSearchService {
+public interface IShowSearchService {
 
     public Task<Either<SearchByNameResult, ShowSearchError>> SearchByNameAsync(SearchByNameRequest query);
 

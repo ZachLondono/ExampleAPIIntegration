@@ -2,7 +2,7 @@
 
 namespace TVMazeIntegration;
 
-internal class Either<T1, T2> {
+public class Either<T1, T2> {
 
     public T1? AsT1 { get; init; }
     public T2? AsT2 { get; init; }

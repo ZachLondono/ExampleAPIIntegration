@@ -1,6 +1,6 @@
 ﻿namespace TVMazeIntegration.Models.Results;
 
-internal record SearchByNameResult {
+public record SearchByNameResult {
 
     public IReadOnlyList<Show> Shows { get; init; }
 

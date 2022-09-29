@@ -1,6 +1,6 @@
 ﻿namespace TVMazeIntegration.Models;
 
-internal record Episode {
+public record Episode {
 
     public int Season { get; init; }
     

@@ -1,6 +1,6 @@
 ﻿namespace TVMazeIntegration.Services;
 
-internal interface IConsoleWriter {
+public interface IConsoleWriter {
 
     public void Write(string message);
 

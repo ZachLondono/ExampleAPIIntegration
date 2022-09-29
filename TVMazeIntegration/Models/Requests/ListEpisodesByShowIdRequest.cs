@@ -1,6 +1,6 @@
 ﻿namespace TVMazeIntegration.Models.Requests;
 
-internal record ListEpisodesByShowIdRequest {
+public record ListEpisodesByShowIdRequest {
 
     public int ShowId { get; init; }
 

@@ -1,6 +1,6 @@
 ﻿namespace TVMazeIntegration.Models;
 
-internal record Show {
+public record Show {
     
     public int Id { get; init; }
     

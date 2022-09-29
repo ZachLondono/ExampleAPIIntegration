@@ -1,3 +1,3 @@
 ﻿namespace TVMazeIntegration.Models;
 
-internal record ShowSearchError(string Reason);
+public record ShowSearchError(string Reason);
