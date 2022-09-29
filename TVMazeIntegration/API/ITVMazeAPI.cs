@@ -9,6 +9,6 @@ internal interface ITVMazeAPI {
     public Task<IReadOnlyCollection<SearchResult>> Search(string query);
 
     [Get("/shows/{showId}/episodes")]
-    public Task<IReadOnlyCollection<EpisodeResult>> Episodes(int showId);
+    public Task<IReadOnlyCollection<EpisodeDTO>> Episodes(int showId);
 
 }

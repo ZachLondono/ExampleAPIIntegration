@@ -2,7 +2,7 @@
 
 namespace TVMazeIntegration.API.Responses;
 
-internal record Show {
+internal record ShowDTO {
 
     [JsonPropertyName("id")]
     public int Id { get; init; }
@@ -10,7 +10,7 @@ internal record Show {
     [JsonPropertyName("name")]
     public string Name { get; init; }
 
-    public Show(int id, string name) {
+    public ShowDTO(int id, string name) {
         Id = id;
         Name = name;
     }

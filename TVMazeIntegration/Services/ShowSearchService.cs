@@ -1,7 +1,10 @@
-﻿using System.Linq;
+﻿using Refit;
 using TVMazeIntegration.API;
+using TVMazeIntegration.API.Responses;
 using TVMazeIntegration.Mapping;
 using TVMazeIntegration.Models;
+using TVMazeIntegration.Models.Requests;
+using TVMazeIntegration.Models.Results;
 using TVMazeIntegration.Validation;
 
 namespace TVMazeIntegration.Services;
@@ -9,16 +12,16 @@ namespace TVMazeIntegration.Services;
 internal class ShowSearchService : IShowSearchService {
 
     private readonly ITVMazeAPI _tvShowApi;
-    private readonly ShowSearchRequestValidator _searchValidator;
-    private readonly ShowEpisodeRequestValidator _episodeValidator;
+    private readonly SearchByNameRequestValidator _searchValidator;
+    private readonly ListEpisodesByShowIdRequestValidator _episodeValidator;
 
-    public ShowSearchService(ITVMazeAPI tvShowApi, ShowSearchRequestValidator validator, ShowEpisodeRequestValidator episodeValidator) {
+    public ShowSearchService(ITVMazeAPI tvShowApi, SearchByNameRequestValidator validator, ListEpisodesByShowIdRequestValidator episodeValidator) {
         _tvShowApi = tvShowApi;
         _searchValidator = validator;
         _episodeValidator = episodeValidator;
     }
 
-    public async Task<Either<ShowSearchResult, ShowSearchError>> SearchByNameAsync(ShowSearchRequest query) {
+    public async Task<Either<SearchByNameResult, ShowSearchError>> SearchByNameAsync(SearchByNameRequest query) {
 
         var validationResult = _searchValidator.Validate(query);
         if (!validationResult.IsValid) {
@@ -27,18 +30,29 @@ internal class ShowSearchService : IShowSearchService {
             return new(searchError);
         }
 
-        var response = await _tvShowApi.Search(query.Query);
+        IReadOnlyCollection<SearchResult> response;
+        
+        try { 
+            
+            response = await _tvShowApi.Search(query.Query);
 
-        var shows = response.Select(s => s.ToFoundShow())
+        } catch (ApiException ex) {
+
+            var apiError = new ShowSearchError(ex.Message);
+            return new(apiError);
+
+        }
+
+        var shows = response.Select(r => r.Show.ToShow())
                             .ToList();
 
-        var searchResult = new ShowSearchResult(shows);
+        var searchResult = new SearchByNameResult(shows);
 
         return new(searchResult);
 
     }
 
-    public async Task<Either<EpisodeSearchResult, ShowSearchError>> SearchShowEpisodes(ShowEpisodeRequest query) {
+    public async Task<Either<ListEpisodesByShowIdResult, ShowSearchError>> ListEpisodesByShowIdAsync(ListEpisodesByShowIdRequest query) {
 
         var validationResult = _episodeValidator.Validate(query);
         if (!validationResult.IsValid) {
@@ -47,12 +61,23 @@ internal class ShowSearchService : IShowSearchService {
             return new(searchError);
         }
 
-        var response = await _tvShowApi.Episodes(query.ShowId);
+        IReadOnlyCollection<EpisodeDTO> response;
 
-        var episodes = response.Select(s => s.ToFoundEpisode())
+        try {
+    
+            response = await _tvShowApi.Episodes(query.ShowId);
+
+        } catch (ApiException ex) {
+
+            var apiError = new ShowSearchError(ex.Message);
+            return new(apiError);
+
+        }
+
+        var episodes = response.Select(e => e.ToEpisode())
                                 .ToList();
 
-        var searchResult = new EpisodeSearchResult(episodes);
+        var searchResult = new ListEpisodesByShowIdResult(episodes);
 
         return new(searchResult);
 

@@ -1,8 +1,9 @@
 ﻿using CommandLine;
 using TVMazeIntegration.Models;
+using TVMazeIntegration.Models.Requests;
+using TVMazeIntegration.Models.Results;
 using TVMazeIntegration.Options;
 using TVMazeIntegration.Services;
-using TVMazeIntegration.Validation;
 
 namespace TVMazeIntegration;
 
@@ -34,8 +35,8 @@ internal class ShowSearchApplication {
     }
 
     private async Task ShowEpisodes(int showId) {
-        var request = new ShowEpisodeRequest(showId);
-        var result = await _searcher.SearchShowEpisodes(request);
+        var request = new ListEpisodesByShowIdRequest(showId);
+        var result = await _searcher.ListEpisodesByShowIdAsync(request);
 
         result.Match(
                 (searchResult) => {
@@ -48,7 +49,10 @@ internal class ShowSearchApplication {
     }
 
     private async Task ShowSearch(string query) {
-        var request = new ShowSearchRequest(query);
+
+        _consoleWriter.Write($"Searching for shows with '{query}' in the title");
+
+        var request = new SearchByNameRequest(query);
         var result = await _searcher.SearchByNameAsync(request);
 
         result.Match(
@@ -61,17 +65,17 @@ internal class ShowSearchApplication {
             );
     }
 
-    private void WriteEpisodeResults(EpisodeSearchResult result) {
+    private void WriteEpisodeResults(ListEpisodesByShowIdResult result) {
         _consoleWriter.WriteLine($"Found {result.Episodes.Count} episodes");
         foreach (var episode in result.Episodes) {
-            _consoleWriter.WriteLine($"{episode.Number}  |   {episode.Season}    |   {episode.Name}");
+            _consoleWriter.WriteLine($"{episode.NumberInSeason}  |   {episode.Season}    |   {episode.Name}");
         }
     }
 
-    private void WriteShowResults(ShowSearchResult result) {
+    private void WriteShowResults(SearchByNameResult result) {
         _consoleWriter.WriteLine($"Found {result.Shows.Count} shows");
         foreach (var show in result.Shows) {
-            _consoleWriter.WriteLine($"{show.Name}  |   {show.ShowId}");
+            _consoleWriter.WriteLine($"{show.Name}  |   {show.Id}");
         }
     }
 

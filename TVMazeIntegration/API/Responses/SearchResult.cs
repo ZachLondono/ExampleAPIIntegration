@@ -5,13 +5,13 @@ namespace TVMazeIntegration.API.Responses;
 internal record SearchResult {
 
     [JsonPropertyName("score")]
-    public double Score { get; init; }
+    public double Confidence { get; init; }
 
     [JsonPropertyName("show")]
-    public Show Show { get; init; }
+    public ShowDTO Show { get; init; }
 
-    public SearchResult(double score, Show show) {
-        Score = score;
+    public SearchResult(double confidence, ShowDTO show) {
+        Confidence = confidence;
         Show = show;
     }
 

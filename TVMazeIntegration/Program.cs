@@ -16,8 +16,8 @@ static void ConfigureServices(IServiceCollection services, IConfiguration config
     services.AddSingleton<ShowSearchApplication>();
     services.AddSingleton<IShowSearchService, ShowSearchService>();
     services.AddSingleton<IConsoleWriter, ConsoleWriter>();
-    services.AddSingleton<ShowSearchRequestValidator>();
-    services.AddSingleton<ShowEpisodeRequestValidator>();
+    services.AddSingleton<SearchByNameRequestValidator>();
+    services.AddSingleton<ListEpisodesByShowIdRequestValidator>();
     services.AddRefitClient<ITVMazeAPI>()
                 .ConfigureHttpClient(c => {
                     c.BaseAddress = new(configuration["BaseUrl"]);
