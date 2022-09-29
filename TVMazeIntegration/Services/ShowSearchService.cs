@@ -36,7 +36,7 @@ internal class ShowSearchService : IShowSearchService {
             
             response = await _tvShowApi.Search(query.Query);
 
-        } catch (ApiException ex) {
+        } catch (Exception ex) {
 
             var apiError = new ShowSearchError(ex.Message);
             return new(apiError);
@@ -67,7 +67,7 @@ internal class ShowSearchService : IShowSearchService {
     
             response = await _tvShowApi.Episodes(query.ShowId);
 
-        } catch (ApiException ex) {
+        } catch (Exception ex) {
 
             var apiError = new ShowSearchError(ex.Message);
             return new(apiError);
