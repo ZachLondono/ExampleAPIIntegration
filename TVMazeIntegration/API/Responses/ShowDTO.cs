@@ -2,7 +2,7 @@
 
 namespace TVMazeIntegration.API.Responses;
 
-internal record ShowDTO {
+public record ShowDTO {
 
     [JsonPropertyName("id")]
     public int Id { get; init; }

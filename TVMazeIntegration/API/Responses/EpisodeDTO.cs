@@ -2,7 +2,7 @@
 
 namespace TVMazeIntegration.API.Responses;
 
-internal record EpisodeDTO {
+public record EpisodeDTO {
 
     [JsonPropertyName("season")]
     public int Season { get; init; }

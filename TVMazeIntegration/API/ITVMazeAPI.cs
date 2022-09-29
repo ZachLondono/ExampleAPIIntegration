@@ -3,7 +3,7 @@ using TVMazeIntegration.API.Responses;
 
 namespace TVMazeIntegration.API;
 
-internal interface ITVMazeAPI {
+public interface ITVMazeAPI {
 
     [Get("/search/shows?q={query}")]
     public Task<IReadOnlyCollection<SearchResult>> Search(string query);

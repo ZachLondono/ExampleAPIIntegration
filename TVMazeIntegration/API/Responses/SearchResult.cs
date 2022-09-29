@@ -2,7 +2,7 @@
 
 namespace TVMazeIntegration.API.Responses;
 
-internal record SearchResult {
+public record SearchResult {
 
     [JsonPropertyName("score")]
     public double Confidence { get; init; }
