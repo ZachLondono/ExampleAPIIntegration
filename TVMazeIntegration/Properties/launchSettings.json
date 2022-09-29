@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "TVMazeIntegration": {
+      "commandName": "Project",
+      "commandLineArgs": "-q bob"
+    }
+  }
+}
