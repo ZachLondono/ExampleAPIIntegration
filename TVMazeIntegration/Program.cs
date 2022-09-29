@@ -1,10 +1,13 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using System.Runtime.CompilerServices;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Refit;
 using TVMazeIntegration;
 using TVMazeIntegration.API;
 using TVMazeIntegration.Services;
 using TVMazeIntegration.Validation;
+
+[assembly: InternalsVisibleTo("TVMazeIntegration.Tests.Unit")]
 
 var configuration = BuildConfiguration();
 var serviceProvider = BuildServiceProvider(configuration);
