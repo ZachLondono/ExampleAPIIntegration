@@ -1,21 +1,21 @@
-﻿using Refit;
+﻿using FluentValidation;
+using Refit;
 using TVMazeIntegration.API;
 using TVMazeIntegration.API.Responses;
 using TVMazeIntegration.Mapping;
 using TVMazeIntegration.Models;
 using TVMazeIntegration.Models.Requests;
 using TVMazeIntegration.Models.Results;
-using TVMazeIntegration.Validation;
 
 namespace TVMazeIntegration.Services;
 
 internal class ShowSearchService : IShowSearchService {
 
     private readonly ITVMazeAPI _tvShowApi;
-    private readonly SearchByNameRequestValidator _searchValidator;
-    private readonly ListEpisodesByShowIdRequestValidator _episodeValidator;
+    private readonly IValidator<SearchByNameRequest> _searchValidator;
+    private readonly IValidator<ListEpisodesByShowIdRequest> _episodeValidator;
 
-    public ShowSearchService(ITVMazeAPI tvShowApi, SearchByNameRequestValidator validator, ListEpisodesByShowIdRequestValidator episodeValidator) {
+    public ShowSearchService(ITVMazeAPI tvShowApi, IValidator<SearchByNameRequest> validator, IValidator<ListEpisodesByShowIdRequest> episodeValidator) {
         _tvShowApi = tvShowApi;
         _searchValidator = validator;
         _episodeValidator = episodeValidator;
