@@ -1,9 +1,11 @@
 ﻿using System.Runtime.CompilerServices;
+using FluentValidation;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Refit;
 using TVMazeIntegration;
 using TVMazeIntegration.API;
+using TVMazeIntegration.Models.Requests;
 using TVMazeIntegration.Services;
 using TVMazeIntegration.Validation;
 
@@ -19,8 +21,8 @@ static void ConfigureServices(IServiceCollection services, IConfiguration config
     services.AddSingleton<ShowSearchApplication>();
     services.AddSingleton<IShowSearchService, ShowSearchService>();
     services.AddSingleton<IConsoleWriter, ConsoleWriter>();
-    services.AddSingleton<SearchByNameRequestValidator>();
-    services.AddSingleton<ListEpisodesByShowIdRequestValidator>();
+    services.AddSingleton<IValidator<SearchByNameRequest>, SearchByNameRequestValidator>();
+    services.AddSingleton<IValidator<ListEpisodesByShowIdRequest>, ListEpisodesByShowIdRequestValidator>();
     services.AddRefitClient<ITVMazeAPI>()
                 .ConfigureHttpClient(c => {
                     c.BaseAddress = new(configuration["BaseUrl"]);
