@@ -5,6 +5,10 @@ VisualStudioVersion = 17.3.32922.545
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TVMazeIntegration", "TVMazeIntegration\TVMazeIntegration.csproj", "{E6C4BC7E-0223-404E-B206-6FFB3F39B4DE}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{94E6E840-465F-4A27-8977-AA039AA6AEFE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TVMazeIntegration.Tests.Unit", "TVMazeIntegration.Tests.Unit\TVMazeIntegration.Tests.Unit.csproj", "{2B7D00E4-4829-4D58-8B2B-20A828DBB0AD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,9 +19,16 @@ Global
 		{E6C4BC7E-0223-404E-B206-6FFB3F39B4DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E6C4BC7E-0223-404E-B206-6FFB3F39B4DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E6C4BC7E-0223-404E-B206-6FFB3F39B4DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2B7D00E4-4829-4D58-8B2B-20A828DBB0AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B7D00E4-4829-4D58-8B2B-20A828DBB0AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B7D00E4-4829-4D58-8B2B-20A828DBB0AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B7D00E4-4829-4D58-8B2B-20A828DBB0AD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{2B7D00E4-4829-4D58-8B2B-20A828DBB0AD} = {94E6E840-465F-4A27-8977-AA039AA6AEFE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {489741DC-2D14-444D-A116-B681F2E16484}
