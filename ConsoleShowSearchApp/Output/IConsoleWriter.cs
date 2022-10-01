@@ -1,4 +1,4 @@
-﻿namespace TVMazeIntegration.Services;
+﻿namespace ConsoleShowSearchApp.Output;
 
 public interface IConsoleWriter {
 

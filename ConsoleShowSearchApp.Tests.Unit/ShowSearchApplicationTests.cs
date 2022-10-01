@@ -1,10 +1,11 @@
-﻿using FluentAssertions;
+﻿using ConsoleShowSearchApp.Output;
 using NSubstitute;
+using TVMazeIntegration;
 using TVMazeIntegration.Models;
 using TVMazeIntegration.Models.Results;
 using TVMazeIntegration.Services;
 
-namespace TVMazeIntegration.Tests.Unit;
+namespace ConsoleShowSearchApp.Tests.Unit;
 
 public class ShowSearchApplicationTests {
 

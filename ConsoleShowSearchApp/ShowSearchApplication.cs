@@ -2,10 +2,11 @@
 using TVMazeIntegration.Models;
 using TVMazeIntegration.Models.Requests;
 using TVMazeIntegration.Models.Results;
-using TVMazeIntegration.Options;
 using TVMazeIntegration.Services;
+using ConsoleShowSearchApp.Options;
+using ConsoleShowSearchApp.Output;
 
-namespace TVMazeIntegration;
+namespace ConsoleShowSearchApp;
 
 internal class ShowSearchApplication {
 

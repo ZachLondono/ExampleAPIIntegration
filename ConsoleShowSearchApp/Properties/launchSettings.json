@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "Console Show Search": {
+      "commandName": "Project",
+      "commandLineArgs": "-q bob"
+    },
+    "Console Episode list": {
+      "commandName": "Project",
+      "commandLineArgs": "-e 1"
+    }
+  }
+}
