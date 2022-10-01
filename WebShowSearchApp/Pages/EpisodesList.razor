@@ -1,0 +1,64 @@
+﻿@page "/episodes/{ShowId:int}"
+@inject IShowSearchService SearchService;
+
+<h3 class="text-white font-semibold text-lg mx-auto">Episodes List For Show #@ShowId</h3>
+
+@foreach (var season in _episodesBySeason.Keys) {
+
+    <div class="text-white mx-auto">Season @season</div>
+    <table class="text-white mb-20 w-full">
+        <thead class="bg-slate-700">
+            <tr>
+                <th class="border-b border-slate-700 pl-8 text-left pt-4">#</th>
+                <th class="border-b border-slate-700 pl-8 text-left pt-4">Name</th>
+            </tr>
+        </thead>
+        <tbody class="bg-slate-800">
+            @foreach (var episode in _episodesBySeason[season]) {
+                <tr>
+                    <td class="border-b border-slate-700 p-4 pl-8 text-slate-300">@episode.NumberInSeason</td>
+                    <td class="border-b border-slate-700 p-4 pl-8 text-slate-300">@episode.Name</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+}
+
+@if(_didEpisodesLoadFail) {
+    <span>@_loadErrorMessage</span>
+}
+
+@code {
+
+    [Parameter]
+    public int ShowId { get; set; }
+
+    private Dictionary<int, List<Episode>> _episodesBySeason = new ();
+
+    private bool _didEpisodesLoadFail = false;
+    private string _loadErrorMessage = "";
+
+    protected override async Task OnInitializedAsync() {
+
+        var request = new ListEpisodesByShowIdRequest(ShowId);
+        var response = await SearchService.ListEpisodesByShowIdAsync(request);
+        
+        response.Match(
+            result => SetEpisodeList(result.Episodes),
+            error => DisplayEpisodeLoadError(error.Reason)
+        );
+
+    }
+
+    public void SetEpisodeList(IReadOnlyCollection<Episode> episodes) {
+        _episodesBySeason = episodes.GroupBy(e => e.Season)
+                                    .ToDictionary(g => g.Key, g => g.ToList());
+    }
+
+    private void DisplayEpisodeLoadError(string message) {
+        _didEpisodesLoadFail = true;
+        _loadErrorMessage = message;
+    }
+
+}
