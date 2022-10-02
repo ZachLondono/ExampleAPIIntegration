@@ -6,7 +6,8 @@ namespace TVMazeIntegration.Mapping;
 internal static class ContractToModelMapping {
 
     public static Show ToShow(this ShowDTO dto) {
-        return new(dto.Id, dto.Name);
+        var imageUrl = dto.Image?.Medium ?? "";
+        return new(dto.Id, dto.Name, imageUrl, dto.Genres, dto.Premiered, dto.Ended);
     }
 
     public static Episode ToEpisode(this EpisodeDTO dto) {

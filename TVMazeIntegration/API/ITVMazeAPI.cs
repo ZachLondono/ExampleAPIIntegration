@@ -11,4 +11,7 @@ public interface ITVMazeAPI {
     [Get("/shows/{showId}/episodes")]
     public Task<IReadOnlyCollection<EpisodeDTO>> Episodes(int showId);
 
+    [Get("/shows/{showId}")]
+    public Task<ShowDTO> ShowDetails(int showId);
+
 }

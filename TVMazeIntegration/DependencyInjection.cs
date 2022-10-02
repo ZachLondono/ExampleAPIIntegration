@@ -19,6 +19,7 @@ public static class DependencyInjection {
         services.AddSingleton<IShowSearchService, ShowSearchService>();
         services.AddSingleton<IValidator<SearchByNameRequest>, SearchByNameRequestValidator>();
         services.AddSingleton<IValidator<ListEpisodesByShowIdRequest>, ListEpisodesByShowIdRequestValidator>();
+        services.AddSingleton<IValidator<GetShowDetailsByIdRequest>, GetShowDetailsByIdRequestValidator>();
         services.AddRefitClient<ITVMazeAPI>()
                     .ConfigureHttpClient(c => {
                         c.BaseAddress = new(configuration["BaseUrl"]);

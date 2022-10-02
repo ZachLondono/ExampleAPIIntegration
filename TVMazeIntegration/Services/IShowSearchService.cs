@@ -8,6 +8,8 @@ public interface IShowSearchService {
 
     public Task<Either<SearchByNameResult, ShowSearchError>> SearchByNameAsync(SearchByNameRequest query);
 
-    public Task<Either<ListEpisodesByShowIdResult, ShowSearchError>> ListEpisodesByShowIdAsync(ListEpisodesByShowIdRequest showId);
+    public Task<Either<ListEpisodesByShowIdResult, ShowSearchError>> ListEpisodesByShowIdAsync(ListEpisodesByShowIdRequest episodeRequest);
+
+    public Task<Either<GetShowDetailsByIdResult, ShowSearchError>> GetShowDetailsById(GetShowDetailsByIdRequest showRequest);
 
 }
