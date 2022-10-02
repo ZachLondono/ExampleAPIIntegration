@@ -1,6 +1,12 @@
 ﻿@page "/shows/{ShowId:int}"
 @inject IShowSearchService SearchService;
 
+@if (_show is not null) {
+    <PageTitle>@_show.Name</PageTitle>
+} else {
+    <PageTitle>Show Details</PageTitle>
+}
+
 <div class="flex">
     @if (_show is not null) {
 

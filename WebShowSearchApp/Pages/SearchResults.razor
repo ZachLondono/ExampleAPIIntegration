@@ -2,6 +2,8 @@
 @inject IShowSearchService SearchService
 @inject NavigationManager NavigationManager
 
+<PageTitle>Search: @Query</PageTitle>
+
 @if (_didQueryFail) {
     <div class="mx-auto w-fit text-red-600">
         <span>Error searching for shows...</span>
