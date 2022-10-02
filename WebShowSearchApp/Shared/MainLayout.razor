@@ -6,7 +6,7 @@
     <header>
         <nav>
             <div class="flex item-center justify-center py-4 border-b flex-wrap">
-                <div class="mr-4 mb-3 sm:my-auto ">
+                <div class="mr-4 mb-3 sm:mb-0 sm:self-center">
                     <a href="/"><span class="font-bold text-white text-xl">TV Show Search</span></a>
                 </div>
                 <div>
@@ -31,7 +31,7 @@
 
     private void SearchForCurrentQuery() {
         if (_searchBar is null || string.IsNullOrWhiteSpace(_searchBar.Query)) return;
-        NavigationManager.NavigateTo($"/search/{_searchBar.Query}");
+        NavigationManager.NavigateTo($"/search/{_searchBar.Query}", forceLoad:true);
     }
 
 }
