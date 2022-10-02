@@ -2,25 +2,13 @@
 @inject IShowSearchService SearchService
 @inject NavigationManager NavigationManager
 
-<div class="border-b">
-    
-    <div class="flex justify-center my-4">
-        <div class="my-auto mr-4">
-            <a href="/"><span class="font-bold text-white text-xl">TV Show Search</span></a>
-        </div>
-        <div>
-            <SearchBar @ref="_searchBar" Query="@Query" OnEnter="SearchForCurrentQuery" />
-        </div>
+@if (_didQueryFail) {
+    <div class="mx-auto w-fit text-red-600">
+        <span>Error searching for shows...</span>
+        <br />
+        <span>@_errorMsg</span>
     </div>
-
-    @if (_didQueryFail) {
-        <div class="mx-auto w-fit text-red-600">
-            <span>Error searching for shows...</span>
-            <br />
-            <span>@_errorMsg</span>
-        </div>
-    }
-</div>
+}
 
 <div class="mx-auto mt-3 max-w-5xl">
     
