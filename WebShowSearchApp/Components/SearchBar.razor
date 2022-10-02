@@ -1,0 +1,32 @@
+﻿<div>
+    <img src="/images/search.svg" class="absolute px-2 pt-2.5" />
+    <input type="text"
+        @bind="@Query"
+        @oninput="@OnInput"
+        @onkeydown="@OnKeyDown"
+        class="border-1 border-white rounded-full p-2 pl-10 text-lg focus:outline-none w-96"
+        placeholder="Search for shows by name" />
+</div>
+
+@code {
+
+    [Parameter]
+    public string Query { get; set; } = string.Empty;
+
+    [Parameter]
+    public Action? OnEnter { get; set; }
+
+    private void OnInput(ChangeEventArgs e) {
+        if (e.Value is null) return;
+        Query = (string) e.Value;
+    }
+
+    private void OnKeyDown(KeyboardEventArgs e) {
+        if (OnEnter is null) return;
+        if (e.Code == "Enter" || e.Code == "NumpadEnter") {
+            OnEnter();
+        }
+    }
+
+
+}

@@ -1,0 +1,79 @@
+﻿@page "/search/{Query}"
+@inject IShowSearchService SearchService
+@inject NavigationManager NavigationManager
+
+<div class="border-b">
+    
+    <div class="flex justify-center my-4">
+        <div class="my-auto mr-4">
+            <a href="/"><span class="font-bold text-white text-xl">TV Show Search</span></a>
+        </div>
+        <div>
+            <SearchBar @ref="_searchBar" Query="@Query" OnEnter="SearchForCurrentQuery" />
+        </div>
+    </div>
+
+    @if (_didQueryFail) {
+        <div class="mx-auto w-fit text-red-600">
+            <span>Error searching for shows...</span>
+            <br />
+            <span>@_errorMsg</span>
+        </div>
+    }
+</div>
+
+<div class="mx-auto mt-3 max-w-5xl">
+    
+    <div class="w-fit mx-auto mb-2">
+        <span class="pl-2 text-slate-400 text-sm">Found @_shows.Count Shows</span>
+    </div>
+
+    @if (_shows.Any()) {
+        
+        <div class="container flex items-center flex-wrap gap-5 justify-center">
+            @foreach (var show in _shows) {
+                <SearchResult Show=show></SearchResult>
+            }
+        </div>
+        
+    }
+
+</div>
+
+@code {
+
+    [Parameter]
+    public string Query { get; set; } = string.Empty;
+
+    private IReadOnlyCollection<Show> _shows = new List<Show>();
+
+    private SearchBar? _searchBar;
+
+    private bool _didQueryFail = false;
+    private string _errorMsg = string.Empty;
+
+    protected override async Task OnInitializedAsync() {
+
+        if (string.IsNullOrEmpty(Query)) return;
+
+        var request = new SearchByNameRequest(Query);
+        var response = await SearchService.SearchByNameAsync(request);
+
+        response.Match(
+            result => _shows = result.Shows,
+            error => DisplayShowLoadError(error.Reason)
+        );
+
+    }
+
+    private void DisplayShowLoadError(string message) {
+        _didQueryFail = true;
+        _errorMsg = message;
+    }
+
+    private void SearchForCurrentQuery() {
+        if (_searchBar is null || string.IsNullOrWhiteSpace(_searchBar.Query)) return;
+        NavigationManager.NavigateTo($"/search/{_searchBar.Query}",forceLoad:true);
+    }
+
+}

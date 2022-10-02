@@ -1,7 +1,28 @@
-﻿@page "/episodes/{ShowId:int}"
+﻿@page "/shows/{ShowId:int}"
 @inject IShowSearchService SearchService;
 
-<h3 class="text-white font-semibold text-lg mx-auto">Episodes List For Show #@ShowId</h3>
+<div class="flex">
+    @if (_show is not null) {
+
+        <div>
+            <img src="@_show.ImageLink">
+        </div>
+
+        <div class="ml-3 p-4 bg-slate-400">
+
+            <h3 class="text-white font-semibold text-lg mx-auto">@_show.Name</h3>
+            <div class="">@GetDateString()</div>
+            @{
+                var count = @_episodesBySeason.Count();
+                <div>@(count + ((count > 1) ? " Seasons" : " Season"))</div>
+            }
+
+        </div>
+
+    } else {
+        <img src="images/placeholder.jpg">
+    }
+</div>
 
 @foreach (var season in _episodesBySeason.Keys) {
 
@@ -34,6 +55,7 @@
     [Parameter]
     public int ShowId { get; set; }
 
+    private Show? _show;
     private Dictionary<int, List<Episode>> _episodesBySeason = new ();
 
     private bool _didEpisodesLoadFail = false;
@@ -41,10 +63,18 @@
 
     protected override async Task OnInitializedAsync() {
 
-        var request = new ListEpisodesByShowIdRequest(ShowId);
-        var response = await SearchService.ListEpisodesByShowIdAsync(request);
-        
-        response.Match(
+        var showRequest = new GetShowDetailsByIdRequest(ShowId);
+        var showResponse = await SearchService.GetShowDetailsById(showRequest);
+
+        showResponse.Match(
+            result => _show = result.Show,
+            error => DisplayEpisodeLoadError(error.Reason)
+        );
+
+        var episodeRequest = new ListEpisodesByShowIdRequest(ShowId);
+        var episodeResponse = await SearchService.ListEpisodesByShowIdAsync(episodeRequest);
+
+        episodeResponse.Match(
             result => SetEpisodeList(result.Episodes),
             error => DisplayEpisodeLoadError(error.Reason)
         );
@@ -59,6 +89,17 @@
     private void DisplayEpisodeLoadError(string message) {
         _didEpisodesLoadFail = true;
         _loadErrorMessage = message;
+    }
+
+    public string GetDateString() {
+        if (_show is null || _show.PremiereDate is null) return "";
+
+        if (_show.EndDate is null) {
+            return $"{_show.PremiereDate.Value.ToShortDateString()} - present";
+        }
+
+        return $"{_show.PremiereDate.Value.ToShortDateString()} - {_show.EndDate.Value.ToShortDateString()}";
+
     }
 
 }

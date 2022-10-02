@@ -1,0 +1,51 @@
+﻿@inject NavigationManager NavigationManager
+
+@if (Show is not null) {
+    <div class="w-56">
+        <div class="cursor-pointer" @onclick="() => OpenShow()">
+            @if (string.IsNullOrWhiteSpace(Show.ImageLink)) {
+                <img src="/images/placeholder.jpg" class="w-full" />
+            } else {
+                <img src="@Show.ImageLink" class="w-full" />
+            }
+        </div>
+        <div class="bg-slate-400 h-24 overflow-hidden p-2">
+            <div>
+                <a href="/shows/@Show.Id">
+                    <p class="truncate cursor-pointer text-white text-xl font-semibold hover:underline">@Show.Name</p>
+                </a>
+            </div>
+            <div>
+                <span class="text-slate-700 text-sm">@DateString()</span>
+            </div>
+            <div>
+                @foreach(var genre in Show.Genres) {
+                    <a class="rounded-full py-1 px-1.5 mr-1 bg-slate-700 text-slate-200 text-xs cursor-pointer select-none" href="/categories/comedy">@genre</a>
+                }
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+
+    [Parameter]
+    public Show? Show { get; set; }
+
+    private void OpenShow() {
+        if (Show is null) return;
+        Console.WriteLine($"Opening show {Show.Name}");
+        NavigationManager.NavigateTo($"/shows/{Show.Id}");
+    }
+
+    private string DateString() {
+        if (Show is null || Show.PremiereDate is null) return "no dates";
+        
+        if (Show.EndDate is null) {
+            return $"{Show.PremiereDate.Value.Year} - present";
+        }
+
+        return $"{Show.PremiereDate.Value.Year} - {Show.EndDate.Value.Year}";
+    }
+
+}

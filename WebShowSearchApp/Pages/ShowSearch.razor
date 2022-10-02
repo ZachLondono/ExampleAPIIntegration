@@ -1,75 +1,36 @@
 ﻿@page "/"
-@inject IShowSearchService SearchService
 @inject NavigationManager NavigationManager
 
-<div class="space-y-10 mx-auto mt-60">
+<div class="space-y-10 lg:mt-56 md:mt-32 mt-16">
     
     <div class="w-fit mx-auto">
-        <span class="font-bold text-white text-xl">TV Show Search</span>
+        <span class="font-bold text-white text-4xl">TV Show Search</span>
     </div>
 
     <div class="w-fit mx-auto">
-        <img src="/images/search.svg" class="absolute px-2 pt-2.5" />
-        <input @bind="_query" class="border-1 border-white rounded-xl p-2 pl-10 w-96 text-lg focus:outline-none" placeholder="Search for shows by name" />
+        <SearchBar @ref="_searchBar" OnEnter="SearchForCurrentQuery" />
     </div>
 
     <div class="w-fit mx-auto">
-        <button @onclick="SearchShows" class="border border-transparent bg-slate-700 rounded-md p-2 text-white font-semibold hover:bg-slate-600 hover:border-slate-600 hover:shadow-md hover:shadow-slate-700">Search for Shows</button>
+        <button @onclick="SearchForCurrentQuery"
+                class="border border-transparent bg-slate-700 rounded-md p-2
+                        hover:bg-slate-600 hover:border-slate-600 hover:shadow-md hover:shadow-slate-700
+                        disabled:text-slate-700">
+            <span class=" text-white font-semibold ">
+                Search for Shows
+            </span>
+        </button>
     </div>
 
-    @if (_didQueryFail) {
-        <div class="mx-auto w-fit text-red-600">
-            <span>Error searching for shows...</span>
-            <br/>
-            <span>@_errorMsg</span>
-        </div>
-    }
-
-</div>
-
-<div class="mx-auto mt-3">
-    @if (_shows.Any()) {
-
-        <span class="text-white text-md">Found @_shows.Count Shows</span>
-        @foreach (var show in _shows) {
-            <div class="rounded-lg bg-slate-500 p-3 mb-2 cursor-pointer hover:bg-slate-400" @onclick="() => OpenShow(show.Id)">
-                <span class="text-white">@show.Name</span>
-                <span>@show.Id</span>
-            </div>
-        }
-    }
 </div>
 
 @code {
 
-    private IReadOnlyCollection<Show> _shows = new List<Show>();
-    private string? _query;
+    private SearchBar? _searchBar;
 
-    private bool _didQueryFail = false;
-    private string _errorMsg = string.Empty;
-
-    private async Task SearchShows() {
-
-        if (_query is null) return;
-
-        var request = new SearchByNameRequest(_query);
-        var response = await SearchService.SearchByNameAsync(request);
-
-        response.Match(
-            result => _shows = result.Shows,
-            error => DisplayShowLoadError(error.Reason)
-        );
-
-    }
-
-    private void DisplayShowLoadError(string message) {
-        _didQueryFail = true;
-        _errorMsg = message;
-    }
-
-    private void OpenShow(int showId) {
-        Console.WriteLine($"Opening show {showId}");
-        NavigationManager.NavigateTo($"/episodes/{showId}");
+    private void SearchForCurrentQuery() {
+        if (_searchBar is null || string.IsNullOrWhiteSpace(_searchBar.Query)) return;
+        NavigationManager.NavigateTo($"/search/{_searchBar.Query}");
     }
 
 }
