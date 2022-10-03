@@ -4,14 +4,15 @@
 <div class="page">
 
     <header>
-        <nav>
-            <div class="flex item-center justify-center py-4 border-b flex-wrap">
-                <div class="mr-4 mb-3 sm:mb-0 sm:self-center">
-                    <a href="/"><span class="font-bold text-white text-xl">TV Show Search</span></a>
-                </div>
-                <div>
-                    <SearchBar @ref="_searchBar" Query="@Query" OnEnter="SearchForCurrentQuery" />
-                </div>
+        <nav class="flex justify-center sm:justify-start items-center my-12 mx-auto max-w-7xl px-12 xl:px-0 ">
+            <div class="mr-4">
+                <a href="/"><span class="font-bold text-white text-xl">TV Show Search</span></a>
+            </div>
+            <div>
+                <SearchBar @ref="_searchBar" Query="@Query" OnEnter="SearchForCurrentQuery" />
+            </div>
+            <div class="hidden sm:flex text-white items-center flex-1 justify-end cursor-pointer">
+                <a href="/favorites">Favorites</a>
             </div>
         </nav>
     </header>

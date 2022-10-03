@@ -12,15 +12,15 @@
     </div>
 }
 
-<div class="mx-auto mt-3 max-w-5xl">
+<div class="mx-auto mt-3 max-w-7xl mb-12">
     
     <div class="w-fit mx-auto mb-2">
         <span class="pl-2 text-slate-400 text-sm">Found @_shows.Count Shows</span>
     </div>
 
     @if (_shows.Any()) {
-        
-        <div class="container flex items-center flex-wrap gap-5 justify-center">
+
+        <div class="container flex flex-wrap justify-center justify-between gap-y-5">
             @foreach (var show in _shows) {
                 <SearchResult Show=show></SearchResult>
             }

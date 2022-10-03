@@ -1,5 +1,7 @@
 ﻿@page "/shows/{ShowId:int}"
-@inject IShowSearchService SearchService;
+@using WebShowSearchApp.Services
+@inject IShowSearchService SearchService
+@inject IFavoritesService FavoritesService
 
 @if (_show is not null) {
     <PageTitle>@_show.Name</PageTitle>
@@ -21,6 +23,11 @@
             @{
                 var count = @_episodesBySeason.Count();
                 <div>@(count + ((count > 1) ? " Seasons" : " Season"))</div>
+            }
+            @if (IsAFavorite()) {
+                <button type="button" class="px-7 py-2 rounded-md bg-blue-500" @onclick="RemoveFromFavorites">Remove From Favorites</button>
+            } else {
+                <button type="button" class="px-7 py-2 rounded-md bg-blue-500" @onclick="AddToFavorites">Add To Favorites</button>
             }
 
         </div>
@@ -105,7 +112,12 @@
         }
 
         return $"{_show.PremiereDate.Value.ToShortDateString()} - {_show.EndDate.Value.ToShortDateString()}";
-
     }
+
+    private bool IsAFavorite() => FavoritesService.GetFavorites().Contains(ShowId);
+
+    private void AddToFavorites() => FavoritesService.AddShowToFavorites(new(ShowId));
+
+    private void RemoveFromFavorites() => FavoritesService.RemoveShowFromFavorites(new(ShowId));
 
 }
