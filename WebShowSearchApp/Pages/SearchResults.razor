@@ -14,12 +14,14 @@
 
 <div class="mx-auto mt-3 max-w-7xl mb-12">
     
-    <div class="mb-2">
-        <h1 class="pl-2 text-white text-lg focus:outline-none">Search Results</h1>
-    </div>
-    <div class="mb-2">
-        <p class="pl-2 text-slate-400 text-sm focus:outline-none">Found @_shows.Count Shows</p>
-    </div>
+    <header>
+        <div class="mb-2">
+            <h1 class="pl-2 text-white text-lg focus:outline-none">Search Results</h1>
+        </div>
+        <div class="mb-2">
+            <p class="pl-2 text-slate-400 text-sm focus:outline-none">Found @_shows.Count Shows</p>
+        </div>
+    </header>
 
     @if (_shows.Any()) {
 

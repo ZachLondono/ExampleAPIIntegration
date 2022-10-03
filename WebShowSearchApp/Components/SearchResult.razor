@@ -18,11 +18,11 @@
             <div>
                 <span class="text-slate-700 text-sm">@DateString()</span>
             </div>
-            <div class="whitespace-nowrap overflow-x-auto overflow-y-hidden">
+            <ul class="flex flex-nowrap whitespace-nowrap overflow-x-auto overflow-y-hidden m-0 p-0">
                 @foreach(var genre in Show.Genres) {
-                    <a class="rounded-full py-1 px-1.5 mr-1 bg-slate-700 text-slate-200 text-xs cursor-pointer select-none" href="/categories/comedy">@genre</a>
+                    <li class="rounded-full py-1 px-1.5 mr-1 bg-slate-700 text-slate-200 text-xs cursor-pointer select-none"><a href="/categories/comedy">@genre</a></li>
                 }
-            </div>
+            </ul>
         </div>
     </div>
 }
